@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +18,6 @@ export default function ContactForm() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,26 +26,18 @@ export default function ContactForm() {
     setErrorMessage(null);
 
     try {
-      if (!executeRecaptcha) {
-        throw new Error(
-          "reCAPTCHA não está disponível. Por favor, recarregue a página."
-        );
-      }
-
-      // Executar reCAPTCHA
-      const recaptchaToken = await executeRecaptcha("contact_form");
-
-      const formData = new FormData();
-      formData.append("nome", nome);
-      formData.append("email", email);
-      formData.append("telefone", telefone);
-      formData.append("area", area);
-      formData.append("mensagem", mensagem);
-      formData.append("recaptchaToken", recaptchaToken);
-
       const response = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome,
+          email,
+          telefone,
+          area,
+          mensagem,
+        }),
       });
 
       const data = await response.json();

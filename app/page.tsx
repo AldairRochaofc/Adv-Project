@@ -1,35 +1,51 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Scale, Shield, Users, Phone, Mail, MapPin, Clock, CheckCircle, Star, Settings } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
-import ContactForm from "@/components/contact-form"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Scale,
+  Shield,
+  Users,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  CheckCircle,
+  Star,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import ContactForm from "@/components/contact-form";
 
 const ContactFormInner = () => {
-  const [nome, setNome] = useState("")
-  const [telefone, setTelefone] = useState("")
-  const [email, setEmail] = useState("")
-  const [area, setArea] = useState("")
-  const [mensagem, setMensagem] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [successMessage, setSuccessMessage] = useState<string | null>(null)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [nome, setNome] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [email, setEmail] = useState("");
+  const [area, setArea] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    setIsLoading(true)
-    setSuccessMessage(null)
-    setErrorMessage(null)
+    setIsLoading(true);
+    setSuccessMessage(null);
+    setErrorMessage(null);
 
     try {
       const response = await fetch("/api/contact", {
@@ -38,33 +54,44 @@ const ContactFormInner = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ nome, telefone, email, area, mensagem }),
-      })
+      });
 
       if (response.ok) {
-        setSuccessMessage("Mensagem enviada com sucesso! Entraremos em contato em breve.")
-        setNome("")
-        setTelefone("")
-        setEmail("")
-        setArea("")
-        setMensagem("")
+        setSuccessMessage(
+          "Mensagem enviada com sucesso! Entraremos em contato em breve."
+        );
+        setNome("");
+        setTelefone("");
+        setEmail("");
+        setArea("");
+        setMensagem("");
       } else {
-        const errorData = await response.json()
-        setErrorMessage(errorData.message || "Ocorreu um erro ao enviar a mensagem.")
+        const errorData = await response.json();
+        setErrorMessage(
+          errorData.message || "Ocorreu um erro ao enviar a mensagem."
+        );
       }
     } catch (error) {
-      console.error("Erro ao enviar o formulário:", error)
-      setErrorMessage("Ocorreu um erro ao enviar a mensagem.")
+      console.error("Erro ao enviar o formulário:", error);
+      setErrorMessage("Ocorreu um erro ao enviar a mensagem.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="nome">Nome Completo</Label>
-          <Input id="nome" name="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} required />
+          <Input
+            id="nome"
+            name="nome"
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            required
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="telefone">Telefone</Label>
@@ -81,7 +108,14 @@ const ContactFormInner = () => {
 
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
       </div>
 
       <div className="space-y-2">
@@ -128,8 +162,8 @@ const ContactFormInner = () => {
         {isLoading ? "Enviando..." : "Enviar Mensagem"}
       </Button>
     </form>
-  )
-}
+  );
+};
 
 export default function LawyerLanding() {
   return (
@@ -142,22 +176,27 @@ export default function LawyerLanding() {
             <span className="text-xl font-bold">Dr. Advogado</span>
           </Link>
           <nav className="hidden md:flex space-x-6">
-            <Link href="#sobre" className="hover:text-amber-400 transition-colors">
+            <Link
+              href="#sobre"
+              className="hover:text-amber-400 transition-colors"
+            >
               Sobre
             </Link>
-            <Link href="#servicos" className="hover:text-amber-400 transition-colors">
+            <Link
+              href="#servicos"
+              className="hover:text-amber-400 transition-colors"
+            >
               Serviços
             </Link>
-            <Link href="#contato" className="hover:text-amber-400 transition-colors">
+            <Link
+              href="#contato"
+              className="hover:text-amber-400 transition-colors"
+            >
               Contato
             </Link>
           </nav>
-          <Button className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold">Consulta Gratuita</Button>
-          <Button variant="outline" size="sm" asChild className="ml-2">
-            <Link href="/config">
-              <Settings className="mr-2 h-4 w-4" />
-              Config
-            </Link>
+          <Button className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold">
+            Consulta Gratuita
           </Button>
         </div>
       </header>
@@ -167,16 +206,23 @@ export default function LawyerLanding() {
         <div className="container mx-auto px-4 py-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <Badge className="bg-amber-500 text-slate-900 hover:bg-amber-600">Advocacia Especializada</Badge>
+              <Badge className="bg-amber-500 text-slate-900 hover:bg-amber-600">
+                Advocacia Especializada
+              </Badge>
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                Defenda Seus <span className="text-amber-400">Direitos</span> com Excelência
+                Defenda Seus <span className="text-amber-400">Direitos</span>{" "}
+                com Excelência
               </h1>
               <p className="text-xl text-slate-300 leading-relaxed">
-                Mais de 15 anos de experiência em direito civil, trabalhista e empresarial. Consultoria jurídica
-                personalizada para proteger seus interesses.
+                Mais de 15 anos de experiência em direito civil, trabalhista e
+                empresarial. Consultoria jurídica personalizada para proteger
+                seus interesses.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold">
+                <Button
+                  size="lg"
+                  className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold"
+                >
                   <Phone className="mr-2 h-5 w-5" />
                   Consulta Gratuita
                 </Button>
@@ -191,7 +237,10 @@ export default function LawyerLanding() {
               <div className="flex items-center space-x-6 pt-4">
                 <div className="flex items-center space-x-1">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                    <Star
+                      key={star}
+                      className="h-5 w-5 fill-amber-400 text-amber-400"
+                    />
                   ))}
                 </div>
                 <span className="text-slate-300">500+ casos resolvidos</span>
@@ -218,9 +267,12 @@ export default function LawyerLanding() {
       <section id="sobre" className="py-20 bg-slate-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Experiência e Dedicação</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+              Experiência e Dedicação
+            </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Comprometido em oferecer soluções jurídicas eficazes e personalizadas para cada cliente
+              Comprometido em oferecer soluções jurídicas eficazes e
+              personalizadas para cada cliente
             </p>
           </div>
 
@@ -232,7 +284,8 @@ export default function LawyerLanding() {
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 text-center">
-                  Defendemos seus direitos com estratégias jurídicas sólidas e comprovadas
+                  Defendemos seus direitos com estratégias jurídicas sólidas e
+                  comprovadas
                 </p>
               </CardContent>
             </Card>
@@ -240,7 +293,9 @@ export default function LawyerLanding() {
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader className="text-center">
                 <Users className="h-12 w-12 text-amber-500 mx-auto mb-4" />
-                <CardTitle className="text-slate-900">Atendimento Personalizado</CardTitle>
+                <CardTitle className="text-slate-900">
+                  Atendimento Personalizado
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 text-center">
@@ -252,10 +307,14 @@ export default function LawyerLanding() {
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader className="text-center">
                 <CheckCircle className="h-12 w-12 text-amber-500 mx-auto mb-4" />
-                <CardTitle className="text-slate-900">Resultados Comprovados</CardTitle>
+                <CardTitle className="text-slate-900">
+                  Resultados Comprovados
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-600 text-center">Histórico de sucesso em mais de 500 casos resolvidos</p>
+                <p className="text-slate-600 text-center">
+                  Histórico de sucesso em mais de 500 casos resolvidos
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -266,9 +325,12 @@ export default function LawyerLanding() {
       <section id="servicos" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Áreas de Atuação</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+              Áreas de Atuação
+            </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Expertise em diversas áreas do direito para atender todas as suas necessidades jurídicas
+              Expertise em diversas áreas do direito para atender todas as suas
+              necessidades jurídicas
             </p>
           </div>
 
@@ -276,44 +338,85 @@ export default function LawyerLanding() {
             {[
               {
                 title: "Direito Civil",
-                description: "Contratos, responsabilidade civil, direito de família e sucessões",
-                features: ["Contratos", "Indenizações", "Divórcio", "Inventário"],
+                description:
+                  "Contratos, responsabilidade civil, direito de família e sucessões",
+                features: [
+                  "Contratos",
+                  "Indenizações",
+                  "Divórcio",
+                  "Inventário",
+                ],
               },
               {
                 title: "Direito Trabalhista",
-                description: "Defesa dos direitos do trabalhador e consultoria empresarial",
+                description:
+                  "Defesa dos direitos do trabalhador e consultoria empresarial",
                 features: ["Rescisões", "Horas Extras", "Assédio", "FGTS"],
               },
               {
                 title: "Direito Empresarial",
-                description: "Consultoria jurídica para empresas e empreendedores",
-                features: ["Contratos", "Sociedades", "Compliance", "Tributário"],
+                description:
+                  "Consultoria jurídica para empresas e empreendedores",
+                features: [
+                  "Contratos",
+                  "Sociedades",
+                  "Compliance",
+                  "Tributário",
+                ],
               },
               {
                 title: "Direito Previdenciário",
-                description: "Aposentadorias, pensões e benefícios previdenciários",
-                features: ["Aposentadoria", "Auxílio-doença", "Pensões", "Revisões"],
+                description:
+                  "Aposentadorias, pensões e benefícios previdenciários",
+                features: [
+                  "Aposentadoria",
+                  "Auxílio-doença",
+                  "Pensões",
+                  "Revisões",
+                ],
               },
               {
                 title: "Direito do Consumidor",
-                description: "Proteção dos direitos do consumidor contra abusos",
-                features: ["Produtos Defeituosos", "Serviços", "Bancos", "Planos de Saúde"],
+                description:
+                  "Proteção dos direitos do consumidor contra abusos",
+                features: [
+                  "Produtos Defeituosos",
+                  "Serviços",
+                  "Bancos",
+                  "Planos de Saúde",
+                ],
               },
               {
                 title: "Direito Imobiliário",
-                description: "Compra, venda, locação e regularização de imóveis",
-                features: ["Compra e Venda", "Locação", "Usucapião", "Regularização"],
+                description:
+                  "Compra, venda, locação e regularização de imóveis",
+                features: [
+                  "Compra e Venda",
+                  "Locação",
+                  "Usucapião",
+                  "Regularização",
+                ],
               },
             ].map((servico, index) => (
-              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+              <Card
+                key={index}
+                className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+              >
                 <CardHeader>
-                  <CardTitle className="text-slate-900 text-xl">{servico.title}</CardTitle>
-                  <CardDescription className="text-slate-600">{servico.description}</CardDescription>
+                  <CardTitle className="text-slate-900 text-xl">
+                    {servico.title}
+                  </CardTitle>
+                  <CardDescription className="text-slate-600">
+                    {servico.description}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
                     {servico.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-slate-600">
+                      <li
+                        key={idx}
+                        className="flex items-center text-slate-600"
+                      >
                         <CheckCircle className="h-4 w-4 text-amber-500 mr-2 flex-shrink-0" />
                         {feature}
                       </li>
@@ -331,7 +434,9 @@ export default function LawyerLanding() {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6">Entre em Contato</h2>
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+                Entre em Contato
+              </h2>
               <p className="text-xl text-slate-300 mb-8">
                 Agende sua consulta gratuita e descubra como podemos ajudar você
               </p>
@@ -357,7 +462,9 @@ export default function LawyerLanding() {
                   <MapPin className="h-6 w-6 text-amber-400" />
                   <div>
                     <div className="font-semibold">Endereço</div>
-                    <div className="text-slate-300">Av. Paulista, 1000 - São Paulo, SP</div>
+                    <div className="text-slate-300">
+                      Av. Paulista, 1000 - São Paulo, SP
+                    </div>
                   </div>
                 </div>
 
@@ -374,7 +481,9 @@ export default function LawyerLanding() {
             <Card className="bg-white text-slate-900">
               <CardHeader>
                 <CardTitle className="text-2xl">Consulta Gratuita</CardTitle>
-                <CardDescription>Preencha o formulário e entraremos em contato em até 24 horas</CardDescription>
+                <CardDescription>
+                  Preencha o formulário e entraremos em contato em até 24 horas
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <ContactForm />
@@ -393,7 +502,10 @@ export default function LawyerLanding() {
                 <Scale className="h-8 w-8 text-amber-400" />
                 <span className="text-xl font-bold">Dr. Advogado</span>
               </div>
-              <p className="text-slate-300">Defendendo seus direitos com excelência e dedicação há mais de 15 anos.</p>
+              <p className="text-slate-300">
+                Defendendo seus direitos com excelência e dedicação há mais de
+                15 anos.
+              </p>
             </div>
 
             <div>
@@ -428,10 +540,13 @@ export default function LawyerLanding() {
           </div>
 
           <div className="border-t border-slate-700 mt-8 pt-8 text-center text-slate-300">
-            <p>&copy; {new Date().getFullYear()} Dr. Advogado. Todos os direitos reservados.</p>
+            <p>
+              &copy; {new Date().getFullYear()} Dr. Advogado. Todos os direitos
+              reservados.
+            </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
