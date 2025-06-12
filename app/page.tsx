@@ -203,8 +203,8 @@ export default function LawyerLanding() {
 
       {/* Hero Section */}
       <section className="pt-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-        <div className="container mx-auto px-4 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 py-20 ">
+          <div className="grid lg:grid-cols-2 gap-12 items-center place-items-center">
             <div className="space-y-6">
               <Badge className="bg-amber-500 text-slate-900 hover:bg-amber-600">
                 Advocacia Especializada
@@ -248,7 +248,7 @@ export default function LawyerLanding() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=600&width=500"
+                src="/adv.png?height=600&width=500"
                 alt="Advogado profissional"
                 width={500}
                 height={600}
